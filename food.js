@@ -1,4 +1,5 @@
 var petFood = new XMLHttpRequest();
+let dogFood = document.getElementById('dog');
 
 petFood.addEventListener('load', petLoad);
 petFood.addEventListener('error', petFail);
@@ -15,26 +16,35 @@ function petFail(event) {
 }
 
 function showFood(stuff) {
-	//console.log("stuff", stuff.dog_brands);
 	let arr = stuff.dog_brands;
 	console.log(arr);
 
 	arr.forEach(function(obj) {
-		console.log("brand", obj.name)
-		let types = obj.types;
+		console.log("brand", obj.name);
+		dogFood.innerHTML += `<tr id="${obj.name}">
+								<td>${obj.name}</td>
+							</tr>`;
+		let types = obj.types,
+			brand = document.getElementById(`${obj.name}`);
+
+		console.log(brand);
+		var str = `<td>`;
 
 		types.forEach(function(obj2) {
 			let type = obj2.type,
-				volume = obj2.volumes;
-			console.log("types", type, "volume", volume);
+				volumes = obj2.volumes;
+			for (prop in volumes){
+				//console.log(type);
+				let volume = volumes[prop].name,
+					price = volumes[prop].price;
 
-			// for(obj2 in types) {
-			// 	console.log("props", types[obj2]);
-			// }
+				console.log(brand, "type", type, "volume", volume, "price", price);
+				str += `&nbsp; ${type}: ${volume} - ${price}. `;
+			}
 		});
+		str += `</td>`;
+		brand.innerHTML += str;
 	})
-
-
 }
 
 petFood.open('GET','food.json');
