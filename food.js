@@ -67,7 +67,7 @@ function showCat(stuff) {
 		var str = `<td>`;
 
 		breeds.forEach(function(breed) {
-			console.log(breed);
+
 			str += `${breed}, `;
 		});
 
